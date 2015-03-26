@@ -76,7 +76,7 @@ public class SearchController {
 	@RequestMapping("/searchPage")
 	public String searchPaginationResults(
 			@RequestParam("srchterm") String query,
-			@RequestParam("srchterm") int number, Model model) {
+			@RequestParam("pageNum") int number, Model model) {
 		System.out
 				.println("query :::::: " + query + " number::::::: " + number);
 		SearchResponse response = bookService.searchbooksPaging(query, number);

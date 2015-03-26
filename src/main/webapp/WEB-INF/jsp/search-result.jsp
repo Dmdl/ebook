@@ -4,6 +4,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
+<div>
+	<input type="text" hidden="true" value="${term}" id="serch-term">
+</div>
 <c:set var="count" value="0" scope="page" />
 <div class="container">
 	<div class="row">
@@ -40,9 +43,38 @@
 		<li class="disabled"><a href="#" aria-label="Previous"><span
 				aria-hidden="true">&laquo;</span></a></li>
 		<c:forEach begin="1" end="${count}" var="val">
-			<li class="${current==val ? 'active' : ''}"><a href=''><c:out
-						value="${val}" /> <span class="sr-only">(current)</span></a></li>
-			<!-- class="active" -->
+			<li class="${current==val ? 'active' : ''}"><a
+				href="javascript:void(0)" class="link_this" pageId="${val}"> <c:out
+						value="${val}" /> <span class="sr-only">(current)</span>
+			</a></li>
 		</c:forEach>
 	</ul>
 </nav>
+
+<script type="text/javascript">
+	$('.link_this').click(function() {
+		alert('clicked');
+		var pageID = $(this).attr('pageId');
+		var searchTerm = $('#serch-term').val();
+		alert(pageID + ' ' + searchTerm);
+		searchBooksWithPaging(searchTerm, pageID);
+	});
+
+	function searchBooksWithPaging(term, page) {
+		$.ajax({
+			url : 'searchPage.html',
+			data : ({
+				srchterm : term,
+				pageNum : page
+			}),
+			success : function(data) {
+				$('#services').html(data);
+			},
+			complete : function(data) {
+				$('html, body').animate({
+					scrollTop : $('#services').offset().top
+				}, 'slow');
+			}
+		});
+	}
+</script>

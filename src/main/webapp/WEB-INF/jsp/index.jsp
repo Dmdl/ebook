@@ -272,7 +272,7 @@
 		var searchTerm = $('#searchTerm').val();
 		searchBooks(searchTerm);
 	});
-
+	
 	function searchBooks(term) {
 		$.ajax({
 			url : 'search.html',
