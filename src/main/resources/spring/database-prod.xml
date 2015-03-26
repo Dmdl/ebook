@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		<property name="maximumPoolSize" value="30" />
+		<property name="dataSourceClassName"
+			value="com.mysql.jdbc.jdbc2.optional.MysqlDataSource" />
+		<property name="dataSourceProperties">
+			<props>
+				<prop key="portNumber">3306</prop>
+				<prop key="serverName">127.8.221.130</prop>
+				<prop key="user">adminVhBG8Wb</prop>
+				<prop key="databaseName">login</prop>
+				<prop key="password">kxNgRSHIRi3s</prop>
+			</props>
+		</property>
+		<property name="poolName" value="springHikariCP" />
+	</bean>
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
+		<constructor-arg ref="hikariConfig" />
+	</bean>
+
+</beans>
