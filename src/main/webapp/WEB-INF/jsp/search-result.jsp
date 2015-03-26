@@ -7,7 +7,7 @@
 <div>
 	<input type="text" hidden="true" value="${term}" id="serch-term">
 </div>
-<c:set var="count" value="0" scope="page" />
+<c:set var="linecount" value="0" scope="page" />
 <div class="container">
 	<div class="row">
 		<div class="col-lg-12 text-center">
@@ -19,7 +19,7 @@
 		<div class="row">
 			<c:forEach items="${serchResult.books}" var="book">
 
-				<c:set var="count" value="${count + 1}" scope="page" />
+				<c:set var="linecount" value="${linecount + 1}" scope="page" />
 				<div class="col-md-4 portfolio-item">
 					<a href="#"> <img class="img-responsive" src="${book.image}"
 						alt="">
@@ -30,15 +30,14 @@
 					<p>${fn:substring(book.description, 0, 100)}...</p>
 				</div>
 
-				<c:if test="${count%3 ==0}">
+				<c:if test="${linecount%3 ==0}">
 					<div class="row"></div>
 				</c:if>
 			</c:forEach>
 		</div>
 	</div>
 </div>
-
-<nav>
+<nav class="text-center">
 	<ul class="pagination">
 		<li class="disabled"><a href="#" aria-label="Previous"><span
 				aria-hidden="true">&laquo;</span></a></li>
@@ -53,10 +52,12 @@
 
 <script type="text/javascript">
 	$('.link_this').click(function() {
-		alert('clicked');
 		var pageID = $(this).attr('pageId');
 		var searchTerm = $('#serch-term').val();
 		alert(pageID + ' ' + searchTerm);
+		$('html, body').animate({
+			scrollTop : $('#services').offset().top
+		}, 'slow');
 		searchBooksWithPaging(searchTerm, pageID);
 	});
 
@@ -71,9 +72,7 @@
 				$('#services').html(data);
 			},
 			complete : function(data) {
-				$('html, body').animate({
-					scrollTop : $('#services').offset().top
-				}, 'slow');
+				
 			}
 		});
 	}

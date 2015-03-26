@@ -64,9 +64,10 @@
 			<form class="navbar-form navbar-right" role="search"
 				id="mainMenuSearch" style="display: none">
 				<div class="form-group">
-					<input type="text" class="form-control" placeholder="Search">
+					<input type="text" class="form-control" placeholder="Search"
+						id="searchNormal">
 				</div>
-				<button type="button" class="btn btn-warning" id="search">Search</button>
+				<button type="button" class="btn btn-warning" id="btnsearch">Search</button>
 			</form>
 			<!-- /.navbar-collapse -->
 		</div>
@@ -84,7 +85,9 @@
 						<input type="text" class="" placeholder="" style="width: 100%;"
 							id="searchTerm"> <span class="input-group-btn"> <a
 							href="#" class="page-scroll btn btn-xl" id="btn-search"
-							style="height: 83px; padding-top: 35px;">SEARCH</a>
+							style="height: 83px; padding-top: 35px;"><img
+								src="<c:url value="/static/img/loader.gif" />"
+								style="display: none" id="loader">SEARCH</a>
 						</span>
 					</div>
 				</div>
@@ -270,9 +273,15 @@
 <script type="text/javascript">
 	$('#btn-search').click(function() {
 		var searchTerm = $('#searchTerm').val();
+		$("#loader").css("display", "block");
 		searchBooks(searchTerm);
 	});
-	
+
+	$('#btnsearch').click(function() {
+		var searchTerm = $('#searchNormal').val();
+		searchBooks(searchTerm);
+	});
+
 	function searchBooks(term) {
 		$.ajax({
 			url : 'search.html',
@@ -283,6 +292,7 @@
 				$('#services').html(data);
 			},
 			complete : function(data) {
+				$("#loader").css("display", "none");
 				$('html, body').animate({
 					scrollTop : $('#services').offset().top
 				}, 'slow');
